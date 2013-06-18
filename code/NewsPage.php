@@ -1,4 +1,13 @@
 <?php
+/**
+ * SilverStripe News Module
+ * =========================
+ *
+ * Module for a news page containing individual news articles (like a blog).
+ *
+ * License: MIT-style license http://opensource.org/licenses/MIT
+ * Authors: Techno Joy development team (www.technojoy.co.nz)
+ */
 
 class NewsPage extends Page {
 

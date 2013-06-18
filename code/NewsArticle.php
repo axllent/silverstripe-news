@@ -1,4 +1,13 @@
 <?php
+/**
+ * SilverStripe News Module
+ * =========================
+ *
+ * News article DataObject
+ *
+ * License: MIT-style license http://opensource.org/licenses/MIT
+ * Authors: Techno Joy development team (www.technojoy.co.nz)
+ */
 
 class NewsArticle extends DataObject {
 
