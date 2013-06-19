@@ -98,7 +98,7 @@ class NewsPage_Controller extends Page_Controller {
 	}
 
 	/*
-	 * Generate tomorrow's date to ensure posts in the future are not shown
+	 * Generate current date to ensure posts in the future are not shown
 	 */
 	public function cur_time() {
 		return date('Y-m-d H:i:s');
