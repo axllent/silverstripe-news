@@ -70,7 +70,15 @@ class NewsPage_Controller extends Page_Controller {
 		/* Article on different page? */
 		if ($this->Article->ParentID != $this->ID || $UrlName != $this->generateURLSegment($this->Article->Title))
 			return $this->redirect($this->Article->Link(), 301);
-		$this->Title = $this->Article->Title;
+
+		/* Override MetaData
+		 * Only works if template calls the $Title individually and not through $MetaTags
+		 * Title not overwritten else $Breadcrumbs does not work
+		 */
+		$this->dataRecord->MetaTitle = '';
+		$this->dataRecord->MetaDescription = '';
+		$this->dataRecord->MetaKeywords = '';
+
 		return $this->renderWith(array('Article_view','Page'));
 	}
 
@@ -109,12 +117,6 @@ class NewsPage_Controller extends Page_Controller {
 	 */
 	public function Title() {
 		return $this->Article ? $this->Article->Title : $this->Title;
-	}
-	/*
-	 * Override MetaTitle to cater for DataObject
-	 */
-	public function MetaTitle() {
-		return $this->Article ? '' : $this->MetaTitle;
 	}
 
 	/*
