@@ -15,6 +15,8 @@ class NewsPage extends Page {
 
 	static $icon = 'silverstripe-news/images/news.png';
 
+	static $description = 'News page with articles';
+
 	static $db = array();
 
 	public static $has_many = array(
