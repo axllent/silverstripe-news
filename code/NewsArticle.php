@@ -77,7 +77,7 @@ class NewsArticle extends DataObject {
 
 	/* Create the item link */
 	public function Link() {
-		return $this->Parent()->Link() . 'article/' . $this->ID . '/' . $this->Parent()->generateURLSegment($this->Title) . '/';
+		return $this->Parent()->Link() . 'article/' . $this->Parent()->generateURLSegment($this->Title) . '-' . $this->ID . '/';
 	}
 
 	public function validate() {

@@ -44,7 +44,7 @@ class NewsPage_Controller extends Page_Controller {
 	public static $allowed_actions = array('ViewArticle', 'rss');
 
 	public static $url_handlers = array(
-		'article//$ArticleID/$UrlName' => 'ViewArticle',
+		'article//$ArticleSegment' => 'ViewArticle',
 	);
 
 	public function init() {
@@ -59,8 +59,15 @@ class NewsPage_Controller extends Page_Controller {
 	}
 
 	public function ViewArticle($request){
-		$id = $request->param('ArticleID');
-		$UrlName = $request->param('UrlName');
+		$segment = $request->param('ArticleSegment');
+
+		/* Split the URL */
+		if (!preg_match('/^(.*)\-(\d+)$/', $segment, $matches))
+			return $this->httpError(404);
+
+		$UrlName = $matches[1];
+		$id = $matches[2];
+
 		$this->Article = $this->NewsArticles()->filter(array(
 			'ID' => $id,
 			'Date:LessThan' => $this->cur_time()
