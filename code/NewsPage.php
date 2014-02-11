@@ -11,15 +11,15 @@
 
 class NewsPage extends Page {
 
-	static $articles_per_page = 10;
+	public static $articles_per_page = 10;
 
-	static $icon = 'silverstripe-news/images/news.png';
+	public static $icon = 'silverstripe-news/images/news.png';
 
-	static $description = 'News page with articles';
+	public static $description = 'News page with articles';
 
-	static $db = array();
+	private static $db = array();
 
-	public static $has_many = array(
+	private static $has_many = array(
 		'NewsArticles' => 'NewsArticle'
 	);
 
@@ -41,7 +41,7 @@ class NewsPage extends Page {
 
 class NewsPage_Controller extends Page_Controller {
 
-	public static $allowed_actions = array('ViewArticle', 'rss');
+	private static $allowed_actions = array('ViewArticle', 'rss');
 
 	public static $url_handlers = array(
 		'article//$ArticleSegment' => 'ViewArticle',

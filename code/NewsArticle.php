@@ -13,13 +13,13 @@ class NewsArticle extends DataObject {
 
 	public static $default_sort = "\"Date\" DESC, \"ID\" DESC";
 
-	public static $db = array(
+	private static $db = array(
 		'Title' => 'Varchar(200)',
 		'Date' => 'Datetime',
 		'Content' => 'HTMLText'
 	);
 
-	public static $has_one = array(
+	private static $has_one = array(
 		'Parent' => 'SiteTree',
 		'Thumbnail' => 'Image'
 	);
