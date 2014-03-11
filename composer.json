@@ -1,0 +1,24 @@
+{
+	"name": "axllent/silverstripe-news",
+	"description": "News module for SilverStripe 3",
+	"type": "silverstripe-module",
+	"homepage": "https://github.com/axllent/silverstripe-news",
+	"keywords": [
+		"silverstripe",
+		"news",
+		"blog"
+	],
+	"license": "The MIT License (MIT)",
+	"authors": [
+		{
+			"name": "Ralph Slooten",
+			"homepage": "http://www.axllent.org/"
+		}
+	],
+	"support": {
+		"issues": "https://github.com/axllent/silverstripe-news/issues"
+	},
+	"require": {
+		"silverstripe/framework": "3.1.*"
+	}
+}
