@@ -136,7 +136,12 @@ class NewsPage_Controller extends Page_Controller {
 		$rss = new RSSFeed(
 			$this->NewsArticles()->filter(array('Date:LessThan' => $this->cur_time())),
 			$this->Link(),
-			$siteConfig->Title
+			$siteConfig->Title,
+			null,
+			'Title',
+			'RssContent',
+			null,
+			'Created'
 		);
 		return $rss->outputToBrowser();
 	}

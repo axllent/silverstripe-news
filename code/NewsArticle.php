@@ -11,7 +11,12 @@
 
 class NewsArticle extends DataObject {
 
-	public static $default_sort = "\"Date\" DESC, \"ID\" DESC";
+	public static $rss_thumb_width = 250;
+
+	public static $default_sort = array(
+		'"Date"' => 'DESC',
+		'"ID"' => 'DESC'
+	);
 
 	private static $db = array(
 		'Title' => 'Varchar(200)',
@@ -38,8 +43,9 @@ class NewsArticle extends DataObject {
 		$fields->removeByName('Title');
 
 		// Set today's date if empty
-		if (!$this->Date)
+		if (!$this->Date) {
 			$this->Date = date('Y-m-d H:i:s');
+		}
 
 		$fields->addFieldsToTab('Root.Main', array(
 			new TextField('Title', 'Article Title'),
@@ -59,6 +65,19 @@ class NewsArticle extends DataObject {
 		$editor->setRows(25);
 
 		return $fields;
+	}
+
+	public function RssContent() {
+		$thumbnail = false;
+		$t = $this->Thumbnail();
+		if ($t->ID) {
+			$thumbnail = '<p><img src="' . $t->setWidth(self::$rss_thumb_width)->URL .
+				'" alt="'. htmlspecialchars($t->Title) . '" /></p>';
+		}
+		return DBField::create_field(
+			'HTMLText',
+			$thumbnail . $this->Content
+		);
 	}
 
 	/* Permissions */
