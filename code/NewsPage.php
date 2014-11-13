@@ -80,7 +80,8 @@ class NewsPage_Controller extends Page_Controller {
 		if ($this->Article->ParentID != $this->ID || $UrlName != $this->generateURLSegment($this->Article->Title))
 			return $this->redirect($this->Article->Link(), 301);
 
-		/* Override MetaData
+		/**
+		 * Override MetaData
 		 * Only works if template calls the $Title individually and not through $MetaTags
 		 * Title not overwritten else $Breadcrumbs does not work
 		 */
@@ -91,7 +92,7 @@ class NewsPage_Controller extends Page_Controller {
 		return $this->renderWith(array('Article_view','Page'));
 	}
 
-	/*
+	/**
 	 * Override BreadCrumbs to add Article to list
 	 */
 	public function Breadcrumbs($maxDepth = 20, $unlinked = false, $stopAtPageType = false, $showHidden = false) {
@@ -114,21 +115,21 @@ class NewsPage_Controller extends Page_Controller {
 		))));
 	}
 
-	/*
+	/**
 	 * Generate current date to ensure posts in the future are not shown
 	 */
 	public function cur_time() {
 		return date('Y-m-d H:i:s');
 	}
 
-	/*
+	/**
 	 * Override Title to cater for DataObject
 	 */
 	public function Title() {
 		return $this->Article ? $this->Article->Title : $this->Title;
 	}
 
-	/*
+	/**
 	 * Generate a RSS feed of news page
 	 */
 	public function rss() {

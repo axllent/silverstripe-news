@@ -67,17 +67,22 @@ class NewsArticle extends DataObject {
 		return $fields;
 	}
 
+	/**
+	 * Generate RSS Content and allow extending
+	 */
 	public function RssContent() {
 		$thumbnail = false;
 		$t = $this->Thumbnail();
 		if ($t->ID) {
-			$thumbnail = '<p><img src="' . $t->setWidth(self::$rss_thumb_width)->URL .
-				'" alt="'. htmlspecialchars($t->Title) . '" /></p>';
+			$thumbnail = '<p><a href="' . $t->URL . '"><img src="' . $t->setWidth(self::$rss_thumb_width)->URL .
+				'" alt="'. htmlspecialchars($t->Title) . '" /></a></p>';
 		}
-		return DBField::create_field(
+		$html = DBField::create_field(
 			'HTMLText',
 			$thumbnail . $this->Content
 		);
+		$this->extend('updateRssContent', $html);
+		return $html;
 	}
 
 	/* Permissions */
