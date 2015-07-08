@@ -48,7 +48,7 @@ class NewsPage_Controller extends Page_Controller {
 	);
 
 	public function init() {
-		RSSFeed::linkToFeed($this->Link() . "rss");
+		RSSFeed::linkToFeed($this->Link() . 'rss');
 		parent::init();
 	}
 
@@ -62,8 +62,9 @@ class NewsPage_Controller extends Page_Controller {
 		$segment = $request->param('ArticleSegment');
 
 		/* Split the URL */
-		if (!preg_match('/^(.*)\-(\d+)$/', $segment, $matches))
+		if (!preg_match('/^(.*)\-(\d+)$/', $segment, $matches)) {
 			return $this->httpError(404);
+		}
 
 		$UrlName = $matches[1];
 		$id = $matches[2];
@@ -72,13 +73,16 @@ class NewsPage_Controller extends Page_Controller {
 			'ID' => $id,
 			'Date:LessThan' => $this->cur_time()
 		))->First();
+
 		/* Article not found */
 		if (!$this->Article) {
 			return $this->httpError(404);
 		}
+
 		/* Article on different page? */
-		if ($this->Article->ParentID != $this->ID || $UrlName != $this->generateURLSegment($this->Article->Title))
+		if ($this->Article->ParentID != $this->ID || $UrlName != $this->generateURLSegment($this->Article->Title)) {
 			return $this->redirect($this->Article->Link(), 301);
+		}
 
 		/**
 		 * Override MetaData

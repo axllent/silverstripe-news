@@ -35,34 +35,36 @@ class NewsArticle extends DataObject {
 	);
 
 	public function getCmsFields() {
+
 		$fields = parent::getCMSFields();
+
 		$fields->removeByName('ParentID');
-		$fields->removeByName('Content');
-		$fields->removeByName('Date');
-		$fields->removeByName('Thumbnail');
-		$fields->removeByName('Title');
 
 		// Set today's date if empty
 		if (!$this->Date) {
 			$this->Date = date('Y-m-d H:i:s');
 		}
 
-		$fields->addFieldsToTab('Root.Main', array(
-			new TextField('Title', 'Article Title'),
-			new LiteralField('DateInfo', '<p>Dates set in the future will not be visible until that day/time.</p>'),
-			$date = new DatetimeField('Date', 'Article Date / Time (24h)'),
-			$ul = new UploadField('Thumbnail', 'Article Image'),
-			$editor = new HtmlEditorField('Content','Article Content')
-		));
+		$fields->dataFieldByName('Title')->setTitle('Article Title');
 
-		$date->getDateField()->setConfig('showcalendar', true);
-		$date->getTimeField()->setConfig('timeformat', 'HH:mm');
+		$fields->addFieldToTab('Root.Main',
+			LiteralField::create('DateInfo', '<p>Dates set in the future will not be visible until that day/time.</p>'),
+			'Date'
+		);
 
-		// Use NewsArticles subfolder
+		$fields->addFieldToTab('Root.Main',
+			$datetime = DatetimeField::create('Date', 'Article Date / Time (24h)'),
+			'Content'
+		);
+		$datetime->getDateField()->setConfig('showcalendar', 1);
+		$datetime->getTimeField()->setConfig('timeformat', 'HH:mm');
+
+		$fields->addFieldToTab('Root.Main',
+			$ul = UploadField::create('Thumbnail', 'Article Image'),
+			'Content'
+		);
 		$ul->setFolderName('NewsArticles');
-		$ul->getValidator()->setAllowedExtensions(array('jpg', 'jpeg', 'gif', 'png'));
-
-		$editor->setRows(25);
+		$ul->setAllowedFileCategories('image');
 
 		return $fields;
 	}
@@ -85,6 +87,18 @@ class NewsArticle extends DataObject {
 		return $html;
 	}
 
+	/* Create the item link */
+	public function Link() {
+		return $this->Parent()->Link() . 'article/' . $this->Parent()->generateURLSegment($this->Title) . '-' . $this->ID . '/';
+	}
+
+	public function validate() {
+		$valid = parent::validate();
+		if (trim($this->Title) == '')
+			$valid->error('Please give your article a title');
+		return $valid;
+	}
+
 	/* Permissions */
 	public function canView($member = null) {
 		return Permission::check('CMS_ACCESS_CMSMain', 'any', $member);
@@ -97,18 +111,6 @@ class NewsArticle extends DataObject {
 	}
 	public function canDelete($member = null) {
 		return Permission::check('CMS_ACCESS_CMSMain', 'any', $member);
-	}
-
-	/* Create the item link */
-	public function Link() {
-		return $this->Parent()->Link() . 'article/' . $this->Parent()->generateURLSegment($this->Title) . '-' . $this->ID . '/';
-	}
-
-	public function validate() {
-		$valid = parent::validate();
-		if (trim($this->Title) == '')
-			$valid->error("Please give your article a title");
-		return $valid;
 	}
 
 }
