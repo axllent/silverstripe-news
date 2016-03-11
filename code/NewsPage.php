@@ -12,7 +12,7 @@
 class NewsPage extends Page
 {
 
-    public static $articles_per_page = 10;
+    public static $articles_per_page = false;
 
     public static $icon = 'silverstripe-news/images/news.png';
 
@@ -29,7 +29,7 @@ class NewsPage extends Page
         $fields = parent::getCMSFields();
         $fields->removeByName('Content');
         $gridField = new GridField('NewsItems', false, $this->NewsArticles(),
-            new GridFieldConfig_RecordEditor(self::$articles_per_page)
+            new GridFieldConfig_RecordEditor($this->getArticlesPerPage())
         );
         $fields->addFieldToTab('Root.Main', $gridField);
         return $fields;
@@ -37,7 +37,11 @@ class NewsPage extends Page
 
     public static function getArticlesPerPage()
     {
-        return self::$articles_per_page;
+        /* provide warnings of old static configurations */
+        if (self::$articles_per_page) {
+            Deprecation::notice('3.2.0', 'Use the "NewsPage.articles_per_page" yaml config instead');
+        }
+        return Config::inst()->get('NewsPage', 'articles_per_page');
     }
 }
 
