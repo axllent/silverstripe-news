@@ -48,7 +48,10 @@ class NewsPage extends Page
 class NewsPage_Controller extends Page_Controller
 {
 
-    private static $allowed_actions = array('ViewArticle', 'rss');
+    private static $allowed_actions = array(
+        'ViewArticle',
+        'rss'
+    );
 
     public static $url_handlers = array(
         'article//$ArticleSegment' => 'ViewArticle',
