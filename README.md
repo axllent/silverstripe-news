@@ -4,9 +4,9 @@ news articles, mapping each one to an individual URL using $url_handlers.
 
 ## Features
 * DataObjects instead of SiteTree for news articles (much neater than adding every article into SiteTree)
-* Controller $url_handlers to provide each article it's own page /<newspage>/article/<article-name>-<id>/ (auto-generated)
+* Controller $url_handlers to provide each article its own page `/<newspage>/article/<article-name>-<id>/` (auto-generated)
 * Individual article date & time - will not show if in the future allowing schedules posts
-* Custom Breadcrumbs() function to add articles to breadcrumbs
+* Custom `Breadcrumbs()` function to add articles to breadcrumbs
 * RSS feed
 * Pagination (see below)
 
