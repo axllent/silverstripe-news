@@ -117,6 +117,7 @@ class NewsPage_Controller extends Page_Controller
         $page = $this->Owner;
         $pages = array();
         if ($this->Article) {
+            $this->Article->MenuTitle = $this->Article->Title;
             $pages[] = $this->Article;
         }
         while (
